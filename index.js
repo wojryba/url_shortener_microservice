@@ -4,7 +4,7 @@ var UrlModel = require('./schema');
 var path = require('path');
 
 var app = express();
-
+mongoose.connect("mongodb://heroku_67x0wf1p:fnloi09eb6ji9prgb4p9cei4sv@ds129610.mlab.com:29610/heroku_67x0wf1p");
 
 var port = process.env.PORT || 3000;
 
@@ -14,7 +14,6 @@ app.get('/', function(req, res){
 
 app.get('/new/*', function(req, res){
   var url = req.params[0];
-  mongoose.connect(MONGODB_URI);
   //ensure we have a valid ulr, else throw error
   if (url.substring(0, 8)=="https://" ||
      url.substring(0, 7)=="http://") {
@@ -35,7 +34,7 @@ app.get('/new/*', function(req, res){
        dbUrl.save().then(function(){
          console.log("done");
        });
-      mongoose.disconnect()
+
      }
   else {
     var resp = {
@@ -50,7 +49,7 @@ app.get('/*', function(req, res){
 
   //save the passed url
   var shortUrl = req.params[0];
-  mongoose.connect(MONGODB_URI);
+
   //find the url in db, chose the long url, and sent it. or send an error
   UrlModel.findOne({'shortUrl': shortUrl}, 'longUrl', function(err, url){
     //if url is finde, redirect to the site
@@ -61,7 +60,6 @@ app.get('/*', function(req, res){
     var resObj = {"error": "This Url is not in the database"};
     res.send(resObj);
     });
-    mongoose.disconnect()
 });
 
 app.listen(port);
