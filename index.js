@@ -9,7 +9,7 @@ var app = express();
 var port = process.env.PORT || 3000;
 
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname + '/url_shortner.html'));
+  res.sendFile('./url_shortner.html', {root: __dirname});
 });
 
 app.get('/new/*', function(req, res){
