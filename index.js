@@ -7,14 +7,14 @@ var app = express();
 
 
 var port = process.env.PORT || 3000;
-mongoose.connect(MONGODB_URI);
+
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname + '/url_shortner.html'));
 });
 
 app.get('/new/*', function(req, res){
   var url = req.params[0];
-
+  mongoose.connect(MONGODB_URI);
   //ensure we have a valid ulr, else throw error
   if (url.substring(0, 8)=="https://" ||
      url.substring(0, 7)=="http://") {
@@ -35,7 +35,7 @@ app.get('/new/*', function(req, res){
        dbUrl.save().then(function(){
          console.log("done");
        });
-
+      mongoose.disconnect()
      }
   else {
     var resp = {
@@ -50,7 +50,7 @@ app.get('/*', function(req, res){
 
   //save the passed url
   var shortUrl = req.params[0];
-
+  mongoose.connect(MONGODB_URI);
   //find the url in db, chose the long url, and sent it. or send an error
   UrlModel.findOne({'shortUrl': shortUrl}, 'longUrl', function(err, url){
     //if url is finde, redirect to the site
@@ -61,6 +61,7 @@ app.get('/*', function(req, res){
     var resObj = {"error": "This Url is not in the database"};
     res.send(resObj);
     });
+    mongoose.disconnect()
 });
 
 app.listen(port);
