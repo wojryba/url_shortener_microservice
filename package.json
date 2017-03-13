@@ -1,0 +1,29 @@
+{
+  "name": "url_shortener_microservice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wojryba/url_shortener_microservice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wojryba/url_shortener_microservice/issues"
+  },
+  "homepage": "https://github.com/wojryba/url_shortener_microservice#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mocha": "^3.2.0",
+    "mongoose": "^4.8.7",
+    "path": "^0.12.7"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "description": ""
+}
