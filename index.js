@@ -1,14 +1,15 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var UrlModel = require('./schema');
-var path = require('path');
 
 var app = express();
-mongoose.connect("mongodb://heroku_67x0wf1p:fnloi09eb6ji9prgb4p9cei4sv@ds129610.mlab.com:29610/heroku_67x0wf1p");
+
 
 var port = process.env.PORT || 3000;
+var connect = process.env.MONGODB_URI
 
 app.get('/', function(req, res){
+  mongoose.connect(connect);
   res.sendFile('./url_shortner.html', {root: __dirname});
 });
 
