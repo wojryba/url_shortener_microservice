@@ -6,10 +6,10 @@ var app = express();
 
 
 var port = process.env.PORT || 3000;
-var connect = process.env.MONGODB_URI
-
+var connect = 'mongodb://heroku_67x0wf1p:fnloi09eb6ji9prgb4p9cei4sv@ds129610.mlab.com:29610/heroku_67x0wf1p';
+//process.env.MONGODB_URI
+mongoose.connect(connect);
 app.get('/', function(req, res){
-  mongoose.connect(connect);
   res.sendFile('./url_shortner.html', {root: __dirname});
 });
 
@@ -48,19 +48,20 @@ app.get('/new/*', function(req, res){
 
 app.get('/*', function(req, res){
 
+
   //save the passed url
   var shortUrl = req.params[0];
-
   //find the url in db, chose the long url, and sent it. or send an error
   UrlModel.findOne({'shortUrl': shortUrl}, 'longUrl', function(err, url){
     //if url is finde, redirect to the site
     if (url != null) {
-      res.redirect(url.longUrl);
+      return res.redirect(url.longUrl);
     }
     //else, send and error.
     var resObj = {"error": "This Url is not in the database"};
     res.send(resObj);
     });
+
 });
 
 app.listen(port);
