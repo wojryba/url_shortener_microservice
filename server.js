@@ -6,8 +6,7 @@ var app = express();
 
 
 var port = process.env.PORT || 3000;
-var connect = 'mongodb://heroku_67x0wf1p:fnloi09eb6ji9prgb4p9cei4sv@ds129610.mlab.com:29610/heroku_67x0wf1p';
-//process.env.MONGODB_URI
+var connect = process.env.MONGODB_URI
 mongoose.connect(connect);
 app.get('/', function(req, res){
   res.sendFile('./url_shortner.html', {root: __dirname});
